@@ -1,0 +1,14 @@
+workflows:
+  ios-personal-build:
+    name: Build iOS for Personal Use
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build .app for simulator
+        script: |
+          xcodebuild -project iOS/MyApp.xcodeproj \
+                     -scheme MyApp \
+                     -destination 'platform=iOS Simulator,name=iPhone 17' \
+                     clean build
+    artifacts:
+      - build/**/*.app
