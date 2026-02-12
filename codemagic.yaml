@@ -6,7 +6,7 @@ workflows:
     scripts:
       - name: Build .app for simulator
         script: |
-          xcodebuild -project iOS/MyApp.xcodeproj \
+          xcodebuild -project MyApp.xcodeproj \
                      -scheme MyApp \
                      -destination 'platform=iOS Simulator,name=iPhone 17' \
                      clean build
