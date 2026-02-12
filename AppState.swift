@@ -1,24 +1,29 @@
+import Foundation
 import SwiftUI
 
-enum AppMode: String, CaseIterable {
-    case real = "Real"
-    case simulation = "Simulación"
+enum AppMode {
+    case real
+    case simulation
 }
 
 final class AppState: ObservableObject {
-    @Published var mode: AppMode = .real
-    @Published var realBank: Double = 200
-    @Published var simulationBank: Double = 200
+
+    @Published var mode: AppMode = .simulation
+
+    @Published var realBank: Double = 1000
+    @Published var simulationBank: Double = 1000
 
     var activeBank: Double {
         mode == .real ? realBank : simulationBank
     }
 
-    func updateBank(amount: Double) {
+    func applyResult(win: Bool, stake: Double, odds: Double) {
+        let profit = win ? stake * (odds - 1) : -stake
+
         if mode == .real {
-            realBank += amount
+            realBank += profit
         } else {
-            simulationBank += amount
+            simulationBank += profit
         }
     }
 }
