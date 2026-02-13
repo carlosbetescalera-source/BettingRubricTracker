@@ -2,16 +2,18 @@ import SwiftUI
 
 @main
 struct BettingRubricTrackerApp: App {
+
     @StateObject var appState = AppState()
-    @StateObject var rulesEngine = RulesEngine()
+
+    init() {
+        NotificationManager.shared.requestPermission()
+        DailyReviewNotifier.schedule()
+    }
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                HomeView()
-                    .environmentObject(appState)
-                    .environmentObject(rulesEngine)
-            }
+            HomeView()
+                .environmentObject(appState)
         }
     }
 }
