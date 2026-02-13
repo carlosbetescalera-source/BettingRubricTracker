@@ -8,8 +8,10 @@ enum AppMode {
 
 final class AppState: ObservableObject {
 
+    // MARK: - Modo
     @Published var mode: AppMode = .simulation
 
+    // MARK: - Bank
     @Published var realBank: Double = 1000
     @Published var simulationBank: Double = 1000
 
@@ -17,8 +19,17 @@ final class AppState: ObservableObject {
         mode == .real ? realBank : simulationBank
     }
 
-    func applyResult(win: Bool, stake: Double, odds: Double) {
-        let profit = win ? stake * (odds - 1) : -stake
+    // MARK: - Apuestas
+    @Published var bets: [Bet] = []
+
+    // MARK: - Añadir apuesta
+    func addBet(_ bet: Bet) {
+        bets.insert(bet, at: 0)
+    }
+
+    // MARK: - Resolver apuesta
+    func resolveBet(_ bet: Bet, win: Bool) {
+        let profit = win ? bet.stake * (bet.odds - 1) : -bet.stake
 
         if mode == .real {
             realBank += profit
